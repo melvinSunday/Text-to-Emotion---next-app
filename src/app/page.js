@@ -142,7 +142,7 @@ export default function Home() {
               className="mb-6 p-4 sm:p-6 bg-white rounded-lg shadow-lg overflow-hidden"
             >
               <h2 className="text-xl sm:text-2xl font-bold mb-3 text-blue-600">About This App</h2>
-              <p className="text-sm sm:text-base leading-relaxed">
+              <p className="text-sm sm:text-base leading-relaxed text-justify">
                 This app uses the Text to Emotion API to analyze the emotions embedded in text. 
                 The API employs complex NLP algorithms to detect emotions such as happiness, surprise, 
                 anger, sadness, and fear. It processes the text, identifies emotion-expressing words, 
