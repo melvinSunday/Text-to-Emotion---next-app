@@ -1,6 +1,6 @@
 # Text to Emotion Analysis
 
-![Text to Emotion Analysis App](./assets/text-to-emotion.png)
+![Text to Emotion Analysis App](./src/assets/text-to-emotion.png)
 
 ## Description
 
