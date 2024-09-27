@@ -42,6 +42,13 @@ export default function Home() {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      analyzeEmotion();
+    }
+  };
+
   const chartData = emotion ? {
     labels: Object.keys(emotion),
     datasets: [
@@ -163,6 +170,7 @@ export default function Home() {
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
+            onKeyDown={handleKeyDown}
             placeholder="Enter some text to analyze..."
             rows={4}
             className="w-full p-4 rounded-lg bg-white border-2 border-blue-200 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent text-sm sm:text-base transition-all duration-300 shadow-md"
