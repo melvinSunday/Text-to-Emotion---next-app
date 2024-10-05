@@ -1,15 +1,30 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
-import { FaInfoCircle, FaPaperPlane } from 'react-icons/fa';
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { FaInfoCircle, FaPaperPlane } from "react-icons/fa";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 export default function Home() {
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
   const [emotion, setEmotion] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -20,10 +35,10 @@ export default function Home() {
     setError(null);
 
     try {
-      const response = await fetch('/api/emotion', {
-        method: 'POST',
+      const response = await fetch("/api/emotion", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ text }),
       });
@@ -33,69 +48,71 @@ export default function Home() {
       if (response.ok) {
         setEmotion(data);
       } else {
-        setError(data.error || 'Something went wrong');
+        setError(data.error || "Something went wrong");
       }
     } catch (err) {
-      setError('Failed to connect to the server');
+      setError("Failed to connect to the server");
     } finally {
       setLoading(false);
     }
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       analyzeEmotion();
     }
   };
 
-  const chartData = emotion ? {
-    labels: Object.keys(emotion),
-    datasets: [
-      {
-        label: 'Emotion Score',
-        data: Object.values(emotion),
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.6)',
-          'rgba(54, 162, 235, 0.6)',
-          'rgba(255, 206, 86, 0.6)',
-          'rgba(75, 192, 192, 0.6)',
-          'rgba(153, 102, 255, 0.6)',
+  const chartData = emotion
+    ? {
+        labels: Object.keys(emotion),
+        datasets: [
+          {
+            label: "Emotion Score",
+            data: Object.values(emotion),
+            backgroundColor: [
+              "rgba(255, 99, 132, 0.6)",
+              "rgba(54, 162, 235, 0.6)",
+              "rgba(255, 206, 86, 0.6)",
+              "rgba(75, 192, 192, 0.6)",
+              "rgba(153, 102, 255, 0.6)",
+            ],
+            borderColor: [
+              "rgba(255, 99, 132, 1)",
+              "rgba(54, 162, 235, 1)",
+              "rgba(255, 206, 86, 1)",
+              "rgba(75, 192, 192, 1)",
+              "rgba(153, 102, 255, 1)",
+            ],
+            borderWidth: 1,
+          },
         ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-        ],
-        borderWidth: 1,
-      },
-    ],
-  } : null;
+      }
+    : null;
 
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'top',
+        position: "top",
         labels: {
           boxWidth: 10,
           font: {
             size: 12,
-            family: "'Poppins', sans-serif"
-          }
-        }
+            family: "'Poppins', sans-serif",
+          },
+        },
       },
       title: {
         display: true,
-        text: 'Emotion Analysis Result',
+        text: "Emotion Analysis Result",
         font: {
           size: 16,
           family: "'Poppins', sans-serif",
-          weight: 'bold'
-        }
+          weight: "bold",
+        },
       },
     },
     scales: {
@@ -104,19 +121,19 @@ export default function Home() {
         ticks: {
           font: {
             size: 12,
-            family: "'Poppins', sans-serif"
-          }
-        }
+            family: "'Poppins', sans-serif",
+          },
+        },
       },
       x: {
         ticks: {
           font: {
             size: 12,
-            family: "'Poppins', sans-serif"
-          }
-        }
-      }
-    }
+            family: "'Poppins', sans-serif",
+          },
+        },
+      },
+    },
   };
 
   return (
@@ -127,7 +144,9 @@ export default function Home() {
         transition={{ duration: 0.5 }}
         className="w-full max-w-3xl mx-auto"
       >
-        <h1 className="text-3xl sm:text-4xl font-[poppins] font-bold mb-6 sm:mb-10 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-600">Text to Emotion Analysis</h1>
+        <h1 className="text-3xl sm:text-4xl font-[poppins] font-bold mb-6 sm:mb-10 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-600">
+          Text to Emotion Analysis
+        </h1>
 
         <motion.button
           onClick={() => setShowInfo(!showInfo)}
@@ -136,26 +155,30 @@ export default function Home() {
           whileTap={{ scale: 0.95 }}
         >
           <FaInfoCircle className="mr-2" />
-          {showInfo ? 'Hide Info' : 'Show Info'}
+          {showInfo ? "Hide Info" : "Show Info"}
         </motion.button>
 
         <AnimatePresence>
           {showInfo && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
+              animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
               className="mb-6 p-4 sm:p-6 bg-white rounded-lg shadow-lg overflow-hidden"
             >
-              <h2 className="text-xl sm:text-2xl font-bold mb-3 text-blue-600">About This App</h2>
+              <h2 className="text-xl sm:text-2xl font-bold mb-3 text-blue-600">
+                About This App
+              </h2>
               <p className="text-sm sm:text-base leading-relaxed text-justify">
-                This app uses the Text to Emotion API to analyze the emotions embedded in text. 
-                The API employs complex NLP algorithms to detect emotions such as happiness, surprise, 
-                anger, sadness, and fear. It processes the text, identifies emotion-expressing words, 
-                and provides a score (0.00 to 1.00) for each emotion category. This granular approach 
-                goes beyond simple sentiment analysis, offering insights into the nuanced feelings 
-                expressed in the text.
+                This app uses the Text to Emotion API to analyze the emotions
+                embedded in text. The API employs complex NLP algorithms to
+                detect emotions such as happiness, surprise, anger, sadness, and
+                fear. It processes the text, identifies emotion-expressing
+                words, and provides a score (0.00 to 1.00) for each emotion
+                category. This granular approach goes beyond simple sentiment
+                analysis, offering insights into the nuanced feelings expressed
+                in the text.
               </p>
             </motion.div>
           )}
@@ -179,8 +202,8 @@ export default function Home() {
             onClick={analyzeEmotion}
             className={`absolute right-3 bottom-3 p-2 rounded-full transition-colors ${
               loading
-                ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                : 'bg-blue-500 text-white hover:bg-blue-600'
+                ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                : "bg-blue-500 text-white hover:bg-blue-600"
             }`}
             disabled={loading}
             whileHover={{ scale: 1.1 }}
@@ -220,8 +243,13 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             className="mt-8"
           >
-            <h2 className="text-2xl font-bold mb-4 text-blue-600">Emotion Analysis Result:</h2>
-            <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg" style={{ height: '400px' }}>
+            <h2 className="text-2xl font-bold mb-4 text-blue-600">
+              Emotion Analysis Result:
+            </h2>
+            <div
+              className="bg-white p-4 sm:p-6 rounded-lg shadow-lg"
+              style={{ height: "400px" }}
+            >
               <Bar data={chartData} options={chartOptions} />
             </div>
           </motion.div>
