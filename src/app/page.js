@@ -1,5 +1,5 @@
 "use client";
-
+import { Poppins } from 'next/font/google';
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Bar } from "react-chartjs-2";
@@ -13,6 +13,13 @@ import {
   Legend,
 } from "chart.js";
 import { FaInfoCircle, FaPaperPlane } from "react-icons/fa";
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  display: 'swap',
+});
+
 
 ChartJS.register(
   CategoryScale,
@@ -91,60 +98,60 @@ export default function Home() {
       }
     : null;
 
-  const chartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        position: "top",
-        labels: {
-          boxWidth: 10,
+    const chartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: "top",
+          labels: {
+            boxWidth: 10,
+            font: {
+              size: 12,
+              family: poppins.style.fontFamily,
+            },
+          },
+        },
+        title: {
+          display: true,
+          text: "Emotion Analysis Result",
           font: {
-            size: 12,
-            family: "'Poppins', sans-serif",
+            size: 16,
+            family: poppins.style.fontFamily,
+            weight: "bold",
           },
         },
       },
-      title: {
-        display: true,
-        text: "Emotion Analysis Result",
-        font: {
-          size: 16,
-          family: "'Poppins', sans-serif",
-          weight: "bold",
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            font: {
+              size: 12,
+              family: poppins.style.fontFamily,
+            },
+          },
         },
-      },
-    },
-    scales: {
-      y: {
-        beginAtZero: true,
-        ticks: {
-          font: {
-            size: 12,
-            family: "'Poppins', sans-serif",
+        x: {
+          ticks: {
+            font: {
+              size: 12,
+              family: poppins.style.fontFamily,
+            },
           },
         },
       },
-      x: {
-        ticks: {
-          font: {
-            size: 12,
-            family: "'Poppins', sans-serif",
-          },
-        },
-      },
-    },
-  };
+    };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 p-6 sm:p-10 text-gray-800 font-poppins">
+    <div className={`min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 p-6 sm:p-10 text-gray-800 ${poppins.className}`}>
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="w-full max-w-3xl mx-auto"
       >
-        <h1 className="text-3xl sm:text-4xl font-[poppins] font-bold mb-6 sm:mb-10 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-600">
+        <h1 className={`text-3xl sm:text-4xl ${poppins.className} font-bold mb-6 sm:mb-10 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-600`}>
           Text to Emotion Analysis
         </h1>
 
